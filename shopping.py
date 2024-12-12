@@ -68,14 +68,12 @@ def load_data(filename):
         "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12
     }
 
-
-
     # read & open csv file
     with open(filename, mode='r') as file:
         reader = csv.DictReader(file)
 
+        # cast into int/floats and map various other to ints (boolean, categorical string features)
         for row in reader:
-            # convert each row to the numerical evidence
             row_evidence = [
                 int(row["Administrative"]),
                 float(row["Administrative_Duration"]),
@@ -108,10 +106,10 @@ def train_model(evidence, labels):
     Given a list of evidence lists and a list of labels, return a
     fitted k-nearest neighbor model (k=1) trained on the data.
     """
-    # Create a K-Nearest Neighbors classifier with k=1
+    # k-Nearest Neighbors classifier with k=1 as requested by the task with sklearn.neighbors
     model = KNeighborsClassifier(n_neighbors=1)
 
-    # Fit the model to the evidence and labels
+    # fit to the evidence and labels
     model.fit(evidence, labels)
 
     return model
@@ -132,13 +130,12 @@ def evaluate(labels, predictions):
     representing the "true negative rate": the proportion of
     actual negative labels that were accurately identified.
     """
-    # Initialize counters
     true_positive = 0
     false_negative = 0
     true_negative = 0
     false_positive = 0
 
-    # Count the true positives, false negatives, true negatives, and false positives
+    # count tp, fn, tn and fp
     for actual, predicted in zip(labels, predictions):
         if actual == 1 and predicted == 1:
             true_positive += 1
@@ -149,10 +146,10 @@ def evaluate(labels, predictions):
         elif actual == 0 and predicted == 1:
             false_positive += 1
 
-    # Calculate sensitivity (true positive rate)
+    # calc sensitivity (tp-rate)
     sensitivity = true_positive / (true_positive + false_negative) if (true_positive + false_negative) > 0 else 0
 
-    # Calculate specificity (true negative rate)
+    # calculate specificity (tn-rate)
     specificity = true_negative / (true_negative + false_positive) if (true_negative + false_positive) > 0 else 0
 
     return sensitivity, specificity
