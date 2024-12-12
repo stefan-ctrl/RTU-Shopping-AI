@@ -6,3 +6,14 @@ This project has been developed by Stefan Siber and is hereby handover for evalu
 
 # Task Description
 Please take a look at [task.md](./TASK) for the task description. This has been copied over from [ORTUS](http://ortus.rtu.lv/).
+
+
+# How to install
+```bash
+pip install -r requirements.txt
+```
+
+# How to run
+```bash
+python shopping.py shopping.csv
+```
